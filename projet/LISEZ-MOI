@@ -1,0 +1,71 @@
+Equipe 5156
+Projet final
+
+
+Auteurs:
+    Bryan Tadié
+    Othmane Lakhdar
+    Dimitrios Nassif
+    Grégory Lagrandcourt
+
+
+Description du programme: 
+    Le parcours est divisé en 3 parties (A, B et S). 
+
+    Tout d'abord, on pourra sélectionner le point de départ voulu soit A, B ou S avec les deux boutons. En appuyant sur le bouton blanc on peut changer la sélection, chaque fois que le bouton est appuyé, la sélection passe au prochain point. Chaque départ est représenté par une couleur sur la DEL. Elle affiche donc la couleur associée au point. Pour confirmer notre choix on appuie sur le bouton interrupt. Après avoir confirmé en appuyant sur le bouton la DEL se mets à clignoter 4 fois par seconde pendant deux secondes puis s’éteint et le robot commence la séquence du point choisie.
+
+    Partie A
+    Consiste en grande partie à suivre une ligne à l'aide du suiveur de ligne et tout au long du parcours le robot peut détecter des poteaux (3 max et 2 min) avec le capteur IR. S'il détecte un poteau le robot s'arrête et émet un son qui varie en fonction de la distance. Les poteaux détectés ainsi que leur distance sont stockés dans la mémoire. 
+    
+    Partie B
+    Le robot devra choisir la bonne route entre 2 chemins, dans l'un des deux il y aura un poteau qui bloque le chemin. Le robot lit dans sa mémoire les valeurs stockées et choisit en conséquence la route libre.
+    
+    Partie S
+    Le robot suit une ligne jusqu'à un couloir. Lorsqu’il arrive au début de ce couloir, il le traverse en rebondissant d'une ligne à l'autre (Zigzag). A la fin du couloir il reprend un suivie de ligne normale jusqu'à la fin (le point X). Arrivé au point X, le robot doit se stationner entre 4 points jaunes.
+    
+    
+Identification matérielle:
+    - DEL libre: Broche B1 --> Output (anode -)
+    - DEL libre: Broche B0 --> Output (cathode +)
+    - Bouton d'interruption: Broche D2 --> Input
+    - Bouton sur breadboard: Broche D1 & Broche D3 --> Input
+    - Piezo: Broche D6 & Broche D7 --> Output
+    - Suiveur de ligne: Broche D2 à D7 --> Input
+    - Capteur IR: Broche A0 --> Input
+    - Roue gauche: Broche B4 & Broche B2 --> Output
+    - Roue droite: Broche B3 & Broche B5 --> Output
+
+
+Librairie:
+    *Led: Permet d’assigner et de changer la couleur (rouge, vert ou ambrée) de la led du robot.
+    *Button: Cette classe nous permet de contrôler les boutons sur la carte mère et sur le breadboard par scrutation.
+    *Can: Permet de contrôler la conversion analogique/numérique, avec cette classe on peut capter des données analogiques et les convertir en données numériques.
+    *Debug: Permet d’afficher des messages sur la console par rs232 grâce à la classe Uart.
+    *DistanceSensor: Récupère et utilise les valeurs du capteur IR pour la détection des poteaux.
+    *Drive: Elle nous facilite l'utilisation du moteur.
+    *Interrupt: Dans cette classe on a configuré les registres pour utiliser les interruptions.
+    *Makerline: Classe permettant de récupérer les valeurs lues par le suiveur de ligne et les utiliser.
+    *Memoire24CXXX: La classe Mémoire24CXXX nous permet l'accès à la mémoire entre autres on peut lire et écrire dans la mémoire.
+    *Motor: Permet de contrôler la vitesse des roues et la direction du robot à l’aide du PWM.
+    *Sound: La classe permet avec des fréquences d'émettre un son.
+    *timer: Permet d’activer le Timer1 afin de pouvoir lever des interruptions à un temps donné.
+    *Uart: On a deux versions une classe et une autre avec des fonctions. Le uart sert à transférer des informations des registres vers le PC.
+    *Robot: Cette classe englobe les fonctionnalités du robot sauf les interruptions pour une utilisation plus simple.
+    *Sensors: Classe regroupant les deux capteurs.
+    *TrackingLine: Méthodes pour suivre les différentes parties du parcours.
+    *Decision: Classe qui permet au robot de choisir le chemin correct dans la partie B.
+    *Eltauro: Classe qui exécute le projet. Elle aide à simplifier et mieux comprendre le code.
+
+
+Table d'états pour selection du point de depart:
+
++---------------+--------------+---------------+---------+
+| États Présent | bouton blanc | État suivant  |   LED   |
++---------------+--------------+---------------+---------+
+| departA       |            0 | departA       | verte   |
+| departA       |            1 | departB       | verte   |
+| departB       |            0 | departB       | rouge   |
+| departB       |            1 | departS       | rouge   |
+| departS       |            0 | departS       | ambree  |
+| departS       |            1 | departA       | ambree  |
++---------------+--------------+---------------+---------+ 
